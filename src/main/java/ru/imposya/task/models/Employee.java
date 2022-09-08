@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @Entity
@@ -16,7 +17,7 @@ public class Employee {
     private int id;
 
     @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
+    @Size(min = 2, max = 20, message = "Name should be between 2 and 20 characters")
     @Column(name = "name")
     private String name;
 
@@ -29,6 +30,18 @@ public class Employee {
     @Email
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "position_id", referencedColumnName = "id")
+    private Position position;
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_project",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    private List<Project> projectList;
+
     public Employee() {
 
     }
@@ -37,6 +50,13 @@ public class Employee {
         this.name = name;
         this.age = age;
         this.email = email;
+    }
+
+    public Employee(String name, int age, String email, Position position) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.position = position;
     }
 
     public int getId() {
@@ -71,12 +91,30 @@ public class Employee {
         this.email = email;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", email='" + email + '\'' +
+                ", position=" + position +
                 '}';
     }
 }
