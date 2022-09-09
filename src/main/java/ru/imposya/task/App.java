@@ -3,6 +3,8 @@ package ru.imposya.task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import ru.imposya.task.models.Customer;
 import ru.imposya.task.models.Employee;
 import ru.imposya.task.models.Position;
 import ru.imposya.task.models.Project;
@@ -14,12 +16,25 @@ public class App {
     public static void main(String[] args) {
         Configuration configuration = new Configuration().addAnnotatedClass(Position.class)
                 .addAnnotatedClass(Employee.class)
-                .addAnnotatedClass(Project.class);
+                .addAnnotatedClass(Project.class)
+                .addAnnotatedClass(Customer.class);
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
 
         try {
             session.beginTransaction();
+
+            //function1
+            String HQL = "SELECT e.name, e.age, project.name FROM Employee e LEFT JOIN e.projectList project WHERE e.id=:id";
+            Query<Object[]> query = session.createQuery(HQL);
+            query.setParameter("id", 5);
+            List<Object[]> list = query.list();
+            for (Object[] o: list) {
+                String name = (String) o[0];
+                Integer age = (Integer) o[1];
+                String projectName = (String) o[2];
+                System.out.println(name + " " + age + " " + projectName);
+            }
 
 
             /*Project project = session.get(Project.class, 1);
