@@ -37,6 +37,7 @@ public class PositionDAO {
 
         positionToBeUpdated.setName(updatedPosition.getName());
         positionToBeUpdated.setSalary(updatedPosition.getSalary());
+        positionToBeUpdated.setEmployeesList(updatedPosition.getEmployeesList());
     }
 
     @Transactional

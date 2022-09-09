@@ -36,6 +36,8 @@ public class ProjectDAO {
         projectToBeUpdated.setPrice(updatedProject.getPrice());
         projectToBeUpdated.setDatabase(updatedProject.getDatabase());
         projectToBeUpdated.setMainLanguage(updatedProject.getMainLanguage());
+        projectToBeUpdated.setCustomer(updatedProject.getCustomer());
+        projectToBeUpdated.setEmployeeList(updatedProject.getEmployeeList());
     }
 
     @Transactional

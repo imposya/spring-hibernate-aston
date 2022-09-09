@@ -36,6 +36,7 @@ public class CustomerDAO {
         customerToBeUpdated.setName(updatedCustomer.getName());
         customerToBeUpdated.setCountry(updatedCustomer.getCountry());
         customerToBeUpdated.setEmail(updatedCustomer.getEmail());
+        customerToBeUpdated.setProjectList(updatedCustomer.getProjectList());
     }
 
     @Transactional

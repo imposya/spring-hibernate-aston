@@ -48,6 +48,8 @@ public class EmployeeDAO {
         employeeToBeUpdated.setName(updatedEmployee.getName());
         employeeToBeUpdated.setAge(updatedEmployee.getAge());
         employeeToBeUpdated.setEmail(updatedEmployee.getEmail());
+        employeeToBeUpdated.setProjectList(updatedEmployee.getProjectList());
+        employeeToBeUpdated.setPosition(updatedEmployee.getPosition());
     }
 
     @Transactional
