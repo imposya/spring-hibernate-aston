@@ -1,6 +1,7 @@
 package ru.imposya.task.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Position {
     @Column(name = "salary")
     private int salary;
 
-    @OneToMany(mappedBy = "position")
+    @OneToMany(mappedBy = "position", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Employee> employeesList;
 
     public Position() {
@@ -58,6 +59,13 @@ public class Position {
 
     public void setEmployeesList(List<Employee> employeesList) {
         this.employeesList = employeesList;
+    }
+
+    public void addEmployee(Employee employee) {
+        if (employeesList == null) {
+            employeesList = new ArrayList<>();
+        }
+        employeesList.add(employee);
     }
 
     @Override

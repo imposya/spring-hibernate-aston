@@ -1,6 +1,7 @@
 package ru.imposya.task.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -104,6 +105,13 @@ public class Project {
 
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
+    }
+
+    public void addEmployee(Employee employee) {
+        if (employeeList == null) {
+            employeeList = new ArrayList<>();
+        }
+        employeeList.add(employee);
     }
 
     @Override

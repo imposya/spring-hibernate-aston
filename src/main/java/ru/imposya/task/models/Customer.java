@@ -1,6 +1,7 @@
 package ru.imposya.task.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Project> projectList;
 
     public Customer() {
@@ -70,6 +71,13 @@ public class Customer {
 
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
+    }
+
+    public void addProject(Project project) {
+        if (projectList == null) {
+            projectList  = new ArrayList<>();
+        }
+        projectList.add(project);
     }
 
     @Override
