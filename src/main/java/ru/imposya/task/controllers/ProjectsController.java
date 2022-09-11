@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.imposya.task.dao.ProjectDAO;
 import ru.imposya.task.models.Project;
+import ru.imposya.task.service.ProjectService;
 
 import javax.validation.Valid;
 
@@ -14,16 +14,16 @@ import javax.validation.Valid;
 @RequestMapping("/projects")
 public class ProjectsController {
 
-    private final ProjectDAO projectDAO;
+    private ProjectService projectService;
 
     @Autowired
-    public ProjectsController(ProjectDAO projectDAO) {
-        this.projectDAO = projectDAO;
+    public ProjectsController(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("project", projectDAO.show(id));
+        model.addAttribute("project", projectService.showProject(id));
         return "projects/show";
     }
 
@@ -38,13 +38,13 @@ public class ProjectsController {
         if (bindingResult.hasErrors())
             return "projects/new";
 
-        projectDAO.save(project);
+        projectService.saveProject(project);
         return "redirect:/projects";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("project", projectDAO.show(id));
+        model.addAttribute("project", projectService.showProject(id));
         return "projects/edit";
     }
 
@@ -54,13 +54,13 @@ public class ProjectsController {
         if (bindingResult.hasErrors())
             return "projects/edit";
 
-        projectDAO.update(id, project);
+        projectService.updateProject(id, project);
         return "redirect:/projects";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        projectDAO.delete(id);
+        projectService.deleteProject(id);
         return "redirect:/projects";
     }
 }
