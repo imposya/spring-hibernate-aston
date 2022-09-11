@@ -7,23 +7,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.imposya.task.dao.CustomerDAO;
 import ru.imposya.task.models.Customer;
+import ru.imposya.task.service.CustomerService;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomersController {
-
-    private final CustomerDAO customerDAO;
+    private final CustomerService customerService;
 
     @Autowired
-    public CustomersController(CustomerDAO customerDAO) {
-        this.customerDAO = customerDAO;
+    public CustomersController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("customer", customerDAO.show(id));
+        model.addAttribute("customer", customerService.showCustomer(id));
         return "customers/show";
     }
 
@@ -38,13 +38,13 @@ public class CustomersController {
         if (bindingResult.hasErrors())
             return "customers/new";
 
-        customerDAO.save(customer);
+        customerService.saveCustomer(customer);
         return "redirect:/customers";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("customer", customerDAO.show(id));
+        model.addAttribute("customer", customerService.showCustomer(id));
         return "customers/edit";
     }
 
@@ -54,13 +54,13 @@ public class CustomersController {
         if (bindingResult.hasErrors())
             return "customers/edit";
 
-        customerDAO.update(id, customer);
+        customerService.updateCustomer(id, customer);
         return "redirect:/customers";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        customerDAO.delete(id);
+        customerService.deleteCustomer(id);
         return "redirect:/customers";
     }
 }

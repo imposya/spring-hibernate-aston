@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.imposya.task.dao.EmployeeDAO;
 import ru.imposya.task.models.Employee;
+import ru.imposya.task.service.EmployeeService;
 
 import javax.validation.Valid;
 
@@ -15,22 +15,22 @@ import javax.validation.Valid;
 @RequestMapping("/employees")
 public class EmployeesController {
 
-    private final EmployeeDAO employeeDAO;
+    private EmployeeService employeeService;
 
     @Autowired
-    public EmployeesController(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeesController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("employees", employeeDAO.index());
+        model.addAttribute("employees", employeeService.indexEmployee());
         return "employees/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("employee", employeeDAO.show(id));
+        model.addAttribute("employee", employeeService.showEmployee(id));
         return "employees/show";
     }
 
@@ -45,13 +45,13 @@ public class EmployeesController {
         if (bindingResult.hasErrors())
             return "employees/new";
 
-        employeeDAO.save(employee);
+        employeeService.saveEmployee(employee);
         return "redirect:/employees";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("employee", employeeDAO.show(id));
+        model.addAttribute("employee", employeeService.showEmployee(id));
         return "employees/edit";
     }
 
@@ -61,13 +61,13 @@ public class EmployeesController {
         if (bindingResult.hasErrors())
             return "employees/edit";
 
-        employeeDAO.update(id, employee);
+        employeeService.updateEmployee(id, employee);
         return "redirect:/employees";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        employeeDAO.delete(id);
+        employeeService.deleteEmployee(id);
         return "redirect:/employees";
     }
 }

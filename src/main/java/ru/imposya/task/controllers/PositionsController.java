@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.imposya.task.dao.PositionDAO;
 import ru.imposya.task.models.Position;
+import ru.imposya.task.service.PositionService;
 
 import javax.validation.Valid;
 
@@ -14,16 +15,16 @@ import javax.validation.Valid;
 @RequestMapping("/positions")
 public class PositionsController {
 
-    private final PositionDAO positionDAO;
+    private PositionService positionService;
 
     @Autowired
-    public PositionsController(PositionDAO positionDAO) {
-        this.positionDAO = positionDAO;
+    public PositionsController(PositionService positionService) {
+        this.positionService = positionService;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("position", positionDAO.show(id));
+        model.addAttribute("position", positionService.showPosition(id));
         return "positions/show";
     }
 
@@ -38,13 +39,13 @@ public class PositionsController {
         if (bindingResult.hasErrors())
             return "positions/new";
 
-        positionDAO.save(position);
+        positionService.savePosition(position);
         return "redirect:/positions";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("position", positionDAO.show(id));
+        model.addAttribute("position", positionService.showPosition(id));
         return "positions/edit";
     }
 
@@ -54,13 +55,13 @@ public class PositionsController {
         if (bindingResult.hasErrors())
             return "positions/edit";
 
-        positionDAO.update(id, position);
+        positionService.updatePosition(id, position);
         return "redirect:/positions";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        positionDAO.delete(id);
+        positionService.deletePosition(id);
         return "redirect:/positions";
     }
 }
