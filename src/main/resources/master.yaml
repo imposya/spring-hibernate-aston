@@ -1,0 +1,325 @@
+databaseChangeLog:
+- changeSet:
+    id: 1663323644930-1
+    author: imposya (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: customer_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: name
+            type: VARCHAR
+        - column:
+            name: country
+            type: VARCHAR
+        - column:
+            name: email
+            type: VARCHAR
+        tableName: customer
+- changeSet:
+    id: 1663323644930-2
+    author: imposya (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: employee_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: name
+            type: VARCHAR
+        - column:
+            name: age
+            type: VARCHAR
+        - column:
+            name: email
+            type: VARCHAR
+        - column:
+            name: position_id
+            type: INTEGER
+        tableName: employee
+- changeSet:
+    id: 1663323644930-3
+    author: imposya (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: employee_project_pkey
+            name: employee_id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: employee_project_pkey
+            name: project_id
+            type: INTEGER
+        tableName: employee_project
+- changeSet:
+    id: 1663323644930-4
+    author: imposya (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: position_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: name
+            type: VARCHAR
+        - column:
+            name: salary
+            type: INTEGER
+        tableName: position
+- changeSet:
+    id: 1663323644930-5
+    author: imposya (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: project_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: name
+            type: VARCHAR
+        - column:
+            name: price
+            type: INTEGER
+        - column:
+            name: database
+            type: VARCHAR
+        - column:
+            name: main_language
+            type: VARCHAR
+        - column:
+            name: customer_id
+            type: INTEGER
+        tableName: project
+- changeSet:
+    id: 1663323644930-6
+    author: imposya (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: id
+            name: id
+            type: NUMERIC
+        - column:
+            header: name
+            name: name
+            type: STRING
+        - column:
+            header: country
+            name: country
+            type: STRING
+        - column:
+            header: email
+            name: email
+            type: STRING
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: data/customer.csv
+        quotchar: '"'
+        separator: ','
+        tableName: customer
+- changeSet:
+    id: 1663323644930-7
+    author: imposya (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: id
+            name: id
+            type: NUMERIC
+        - column:
+            header: name
+            name: name
+            type: STRING
+        - column:
+            header: age
+            name: age
+            type: STRING
+        - column:
+            header: email
+            name: email
+            type: STRING
+        - column:
+            header: position_id
+            name: position_id
+            type: NUMERIC
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: data/employee.csv
+        quotchar: '"'
+        separator: ','
+        tableName: employee
+- changeSet:
+    id: 1663323644930-8
+    author: imposya (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: employee_id
+            name: employee_id
+            type: NUMERIC
+        - column:
+            header: project_id
+            name: project_id
+            type: NUMERIC
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: data/employee_project.csv
+        quotchar: '"'
+        separator: ','
+        tableName: employee_project
+- changeSet:
+    id: 1663323644930-9
+    author: imposya (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: id
+            name: id
+            type: NUMERIC
+        - column:
+            header: name
+            name: name
+            type: STRING
+        - column:
+            header: salary
+            name: salary
+            type: NUMERIC
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: data/position.csv
+        quotchar: '"'
+        separator: ','
+        tableName: position
+- changeSet:
+    id: 1663323644930-10
+    author: imposya (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            header: id
+            name: id
+            type: NUMERIC
+        - column:
+            header: name
+            name: name
+            type: STRING
+        - column:
+            header: price
+            name: price
+            type: NUMERIC
+        - column:
+            header: database
+            name: database
+            type: STRING
+        - column:
+            header: main_language
+            name: main_language
+            type: STRING
+        - column:
+            header: customer_id
+            name: customer_id
+            type: NUMERIC
+        commentLineStartsWith: '#'
+        encoding: UTF-8
+        file: data/project.csv
+        quotchar: '"'
+        separator: ','
+        tableName: project
+- changeSet:
+    id: 1663323644930-11
+    author: imposya (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: position_id
+        baseTableName: employee
+        constraintName: employee_position_id_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: SET NULL
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: position
+        validate: true
+- changeSet:
+    id: 1663323644930-12
+    author: imposya (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: employee_id
+        baseTableName: employee_project
+        constraintName: employee_project_employee_id_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: employee
+        validate: true
+- changeSet:
+    id: 1663323644930-13
+    author: imposya (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: project_id
+        baseTableName: employee_project
+        constraintName: employee_project_project_id_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: project
+        validate: true
+- changeSet:
+    id: 1663323644930-14
+    author: imposya (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: customer_id
+        baseTableName: project
+        constraintName: project_customer_id_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: SET NULL
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: customer
+        validate: true
+
