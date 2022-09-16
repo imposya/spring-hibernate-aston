@@ -1,5 +1,6 @@
 package ru.imposya.task.config;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Properties;
 
 
@@ -116,5 +118,13 @@ public class SpringConfig implements WebMvcConfigurer {
         transactionManager.setSessionFactory(sessionFactory().getObject());
 
         return transactionManager;
+    }
+
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:/changelog.xml");
+        liquibase.setDataSource(dataSource());
+        return liquibase;
     }
 }

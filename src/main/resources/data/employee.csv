@@ -1,0 +1,5 @@
+"id","name","age","email","position_id"
+"2","Maria","21","masha@mail.ru","2"
+"1","Alexander123","25","sasha.lat@mail.ru","1"
+"5","Vasyan","15","vasya@mail.ru","3"
+"6","Petya","25","vasyan@mail.ru","NULL"
